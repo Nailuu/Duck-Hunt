@@ -351,3 +351,6 @@ const init = () => {
 startBtn.addEventListener('click', () => {
   init();
 }, {once: true})
+
+
+// Typing for first push, ignore this part.

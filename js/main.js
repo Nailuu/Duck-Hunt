@@ -255,12 +255,23 @@ const booleanDuckAvoided = () => {
 
 //Main function to manage ammunition system
 const ammunitions = () => {
-    ammo--;
+  // const container = document.querySelector('.container');
+  function clear() {
+    clearInterval(this) 
+    return clear; 
+  }
+  ammo--;
+  displayAmmo();
+  if(noAmmo()) {
+
+    setInterval(() => {
+      ammo++
+      console.log(ammo);
+      if(ammo == 6) clear();
+    },300);
+     
+  }
     displayAmmo();
-    if(noAmmo()) {
-      ammo = 6;
-      displayAmmo();
-    }
 }
 
 // Display ammo remaining

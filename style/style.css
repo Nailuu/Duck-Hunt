@@ -10,14 +10,17 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    gap: 1em;
+    margin: 1em;
 }
 
 .container {
-    border: solid black 2px;
     width: 1200px;
     height: 625px;
     background: no-repeat center/100% url("../img/background.jpg");
     cursor: none;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .duck {
@@ -31,6 +34,7 @@ body {
 button {
     padding: 0.5em 1em;
     margin-bottom: 0.5em;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 #countdown {
@@ -72,4 +76,39 @@ button {
     justify-content: space-around;
     align-items: center;
     width: 1200px;
+}
+
+.btn-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.panel-score-duck, .panel-score-hunter, .panel-countdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    background-color: grey;
+    height: 110px;
+    width: 200px;
+    border-radius: 20px;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.countdown {
+    height: 110px;
+    width: 250px;
+    font-size: 5em;
+}
+
+#scoreDuck, #scoreHunter {
+    font-size: 5em;
+}
+
+#duck-ico, #hunter-ico {
+    height: 5em;
+    width: 5em;
 }

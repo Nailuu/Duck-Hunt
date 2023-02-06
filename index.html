@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="panel">
-        <div class="panel-score-duck">Duck Score: <span id="scoreDuck">0</span></div>
+        <div class="panel-score-duck"><label for="scoreDuck"><img src="/img/duck.png" alt="" id="duck-ico"></label><span id="scoreDuck">0</span></div>
         <div class="btn-area">
             <div class="difficulty">
                 <button id="easy">EASY</button>
@@ -23,7 +23,7 @@
                 <button id="reset" onClick="window.location.reload()">RESET</button>
             </div>
         </div>
-        <div class="panel-score-hunter">Hunter Score: <span id="scoreHunter">0</span></div>
+        <div class="panel-score-hunter"><label for="scoreHunter"><img src="/img/hunter.png" alt="" id="hunter-ico"></label><span id="scoreHunter">0</span></div>
     </div>
     <div class="container">
         <div id="countdown"></div>
@@ -31,9 +31,9 @@
             <img src="/img/shotgun.png" alt="" id="shotgun">
         </div>
     </div>
-    <div class="ammo-panel">
+    <aside class="ammo-panel">
         Ammo remaining : <span id="ammo">6</span>
-    </div>
+    </aside>
     <script src="js/main.js"></script>
 </body>
 </html>

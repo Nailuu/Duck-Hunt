@@ -57,13 +57,24 @@ const initDuck = () => {
 
 // Countdown before game end
 const countdown = () => {
-    var countdownElement = document.querySelector('#countdown');
-    var startMinutes = 2;
-    var countdown = startMinutes * 60;
+    const countdownElement = document.querySelector('.btn-area');
+
+    const difficulty = document.querySelector('.difficulty');
+    const command = document.querySelector('.command');
+
+    countdownElement.removeChild(difficulty);
+    countdownElement.removeChild(command);
+
+    countdownElement.classList.add('panel-countdown');
+    countdownElement.classList.add('countdown');
+
+    let startMinutes = 2;
+    let countdown = startMinutes * 60 - 1;
+    countdownElement.innerText = `02:00`;
 
     setInterval(() =>{
-        var minutes = parseInt(countdown / 60, 10);
-        var secondes = parseInt(countdown % 60, 10);
+        let minutes = parseInt(countdown / 60, 10);
+        let secondes = parseInt(countdown % 60, 10);
         minutes = minutes < 10 ? '0' + minutes : minutes
         secondes = secondes < 10 ? '0' + secondes : secondes
     
@@ -370,6 +381,7 @@ const pauseAudio = () => {
 //Get user cursor position in the window and replace his cursor with a shotgun
 const gunCursor = () => {
     const gun = document.querySelector('#gun');
+    gun.classList.remove("hidden");
 
     window.addEventListener('mousemove', e => {
       gun.style.left = (e.clientX - 14) + 'px';
@@ -392,7 +404,7 @@ const init = () => {
     setDuckAnimation();
     gunCursor();
     hunterShoot();
-    playSound(0);
+    // playSound(0);
     duckAvoidingTimer();
     gun.classList.remove('hidden');
 }

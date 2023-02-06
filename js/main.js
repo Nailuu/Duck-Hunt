@@ -13,11 +13,12 @@ const game = {
   easyBtn: document.querySelector('#easy'),
   normalBtn: document.querySelector('#normal'),
   hardBtn: document.querySelector('#hard'),
-  duckAnimationInterval: null
+  duckAnimationInterval: null,
+  keys: []
 }
 
 // So variables are more accessible (ex: game.duckScore --> duckScore)
-let {duckSide, duckSpeed, duckScore, hunterScore, ammo, container, duck, gun, timer, duckAnimationInterval, startBtn, easyBtn, normalBtn, hardBtn} = game;
+let {duckSide, duckSpeed, duckScore, hunterScore, ammo, container, duck, gun, timer, duckAnimationInterval, startBtn, easyBtn, normalBtn, hardBtn, keys} = game;
 
 easyBtn.disabled = true;
 
@@ -147,72 +148,75 @@ const setDeadDuck = () => {
 
 // Event listener callback on pressed keys to move duck with multiple keyboards layout (AZERTY, QWERTY)
 const duckMovementEvent = (e) => {
-    let left = parseInt(duck.style.left) || 0;
-    let top = parseInt(duck.style.top) || 0;
+    let x = parseInt(duck.style.left) || 0;
+    let y = parseInt(duck.style.top) || 0;
     
-     
+    // Store pressed keys when key is down
+    keys[e.keyCode] = true;
+
     // Moves with Arrow Keys
-    switch (e.keyCode) {
 
-      // Moves towards the left
-      case 37:
-        left -= duckSpeed;
+    // LEFT
+    if(keys[37]) {
+      x -= duckSpeed;
         duckSide = "L";
-        break;
-
-      // Moves towards the up
-      case 38:
-        top -= duckSpeed;
-        break;
-
-      // Moves towards the right
-      case 39:
-        left += duckSpeed;
-        duckSide = "R";
-        break;
-
-      // Moves towards the bottom
-      case 40:
-        top += duckSpeed;
-        break;
-
-      default:
-        break;
     }
+
+    // UP
+    if(keys[38]) {
+      y -= duckSpeed;
+    }
+     
+    // RIGHT
+    if(keys[39]) {
+      x += duckSpeed;
+      duckSide = "R";
+    }
+
+    // DOWN
+    if(keys[40]) {
+      y += duckSpeed;
+    }
+
     e.preventDefault();
   
     //To avoid duck from exiting playground borders
-    if (left < 0) {
-      left = 0;
-    } else if (left + duck.offsetWidth > container.offsetWidth) {
-      left = container.offsetWidth - duck.offsetWidth;
+    if(x < 0) {
+      x = 0;
+    } else if (x + duck.offsetWidth > container.offsetWidth) {
+      x = container.offsetWidth - duck.offsetWidth;
     }
   
-    if (top < 0) {
-      top = 0;
-    } else if (top + duck.offsetHeight > container.offsetHeight) {
-      top = container.offsetHeight - duck.offsetHeight;
+    if (y < 0) {
+      y = 0;
+    } else if (y + duck.offsetHeight > container.offsetHeight) {
+      y = container.offsetHeight - duck.offsetHeight;
     }
 
-    if (left < 0) {
-      left = 0;
-    } else if (left + duck.offsetWidth > container.offsetWidth) {
-      left = container.offsetWidth - duck.offsetWidth;
+    if (x < 0) {
+      x = 0;
+    } else if (x + duck.offsetWidth > container.offsetWidth) {
+      x = container.offsetWidth - duck.offsetWidth;
     }
   
-    if (top < 0) {
-      top = 0;
-    } else if (top + duck.offsetHeight > container.offsetHeight) {
-      top = container.offsetHeight - duck.offsetHeight;
+    if (y < 0) {
+      y = 0;
+    } else if (y + duck.offsetHeight > container.offsetHeight) {
+      y = container.offsetHeight - duck.offsetHeight;
     }
 
-  duck.style.left = left + "px";
-  duck.style.top = top + "px";
+  duck.style.left = x + "px";
+  duck.style.top = y + "px";
 }
 
 // Move the duck in the space depending on pressed keys, and also avoid duck from exiting playground borders
 const duckMovement = () => {
-    document.addEventListener("keydown", duckMovementEvent);
+    document.addEventListener("keydown", duckMovementEvent, false);
+    document.addEventListener("keyup", e => {
+
+      // Remove stored pressed keys when key are up
+      keys[e.keyCode] = false;
+    }, false)
 }
 
 // Add +1 to hunter score

@@ -179,6 +179,7 @@ const duckMovementEvent = (e) => {
       default:
         break;
     }
+    e.preventDefault();
   
     //To avoid duck from exiting playground borders
     if (left < 0) {
@@ -242,7 +243,7 @@ const duckAvoidingTimer = (reset) => {
 
     if(time == 0){
   
-      time = 10;
+      time = 9;
       addDuckScore();
     }
   }, 1000);

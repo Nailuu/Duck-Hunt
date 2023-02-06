@@ -120,7 +120,7 @@ const setDuckGodMode = () => {
 
   setTimeout(() => {
     duckMovement();
-    duckShot();
+    hunterShoot();
   }, 1500)
 }
 
@@ -251,6 +251,34 @@ const addDuckScore = () => {
     score.innerText = duckScore;
 }
 
+
+// Timer of 10s of duck avoiding
+// Reset = 1 => Timer reset to 10
+const duckAvoidingTimer = (reset) => {
+  time = 10;
+  setInterval(() =>{
+    if(reset == 1){
+      time = 10;
+    }
+    else{
+      time = time;
+    }
+    time = time  <= 0 ? 0 : time - 1 
+    console.log(time);
+
+    if(time == 0){
+      console.log("Duck Score added!")
+      time = 10;
+      addDuckScore();
+    }
+  }, 1000);
+}
+
+// Did the duck avoid being shot for 10 seconds?
+const booleanDuckAvoided = () => {
+
+}
+
 //Main function to manage ammunition system
 const ammunitions = () => {
     ammo--;
@@ -279,9 +307,17 @@ const duckShotEvent = () => {
 }
 
 //Add event listener on duck hit
-const duckShot = () => {
-    const duck = document.querySelector('.duck')
-    duck.addEventListener('mousedown', duckShotEvent)
+const hunterShoot = () => {
+    const hunterMiss = document.querySelector('.container');
+    const duck = document.querySelector('.duck');
+    duck.addEventListener('mousedown', function(hunterShoot){
+      hunterShoot.stopImmediatePropagation();
+      duckShotEvent();
+
+      });
+    if(hunterMiss.addEventListener('mousedown', ammunitions)){
+      hunterMiss.addEventListener('mousedown', ammunitions)
+    }
 }
 
 // Depending on the score based on the countdown, displays if the hunter wins or the duck wins
@@ -298,11 +334,24 @@ const playSound = track => {
 
 
     case 0:
+      // Shooting Sound
+      let shoot = document.querySelector("#start");
+      function playMusic(){
+              let audio = new Audio("../audio/shoot.mp3");
+              audio.play()
+      }
+      shoot.addEventListener("click", playMusic);
+      break;
+
     case 1:
       // Cogging Sound
-      let cog = new Audio();
-      cog.src = "../audio/cog.mp3";
-      cog.play();
+      let cog = document.querySelector("#start");
+
+      function playMusic(){
+              let audio = new Audio("../audio/cog.mp3");
+              audio.play()
+      }
+      cog.addEventListener("click", playMusic);
       break;
 
     case 2:
@@ -342,8 +391,9 @@ const init = () => {
     duckMovement();
     setDuckAnimation();
     gunCursor();
-    duckShot();
-    // playSound(0);
+    hunterShoot();
+    playSound(0);
+    duckAvoidingTimer();
     gun.classList.remove('hidden');
 }
 
@@ -351,7 +401,3 @@ const init = () => {
 startBtn.addEventListener('click', () => {
   init();
 }, {once: true})
-
-
-// Typing for first push, ignore this part. - Moonlight
-// Another test from Nailu

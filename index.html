@@ -21,14 +21,6 @@
             <div class="command">
                 <button id="start">START</button>
                 <button id="reset" onClick="window.location.reload()">RESET</button>
-                <script>
-                    let play = document.querySelector("#start");
-                    function playMusic(){
-                            let audio = new Audio("shoot.mp3");
-                            audio.play()
-                    }
-                    play.addEventListener("click", playMusic);
-                </script>
             </div>
         </div>
         <div class="panel-score-hunter">Hunter Score: <span id="scoreHunter">0</span></div>

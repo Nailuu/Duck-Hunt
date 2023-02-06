@@ -245,10 +245,8 @@ const duckAvoidingTimer = (reset) => {
       time = time;
     }
     time = time  <= 0 ? 0 : time - 1 
-    console.log(time);
 
     if(time == 0){
-      console.log("Duck Score added!")
       time = 10;
       addDuckScore();
     }
@@ -262,12 +260,23 @@ const booleanDuckAvoided = () => {
 
 //Main function to manage ammunition system
 const ammunitions = () => {
-    ammo--;
+  // const container = document.querySelector('.container');
+  function clear() {
+    clearInterval(this) 
+    return clear; 
+  }
+  ammo--;
+  displayAmmo();
+  if(noAmmo()) {
+
+    setInterval(() => {
+      ammo++
+      console.log(ammo);
+      if(ammo == 6) clear();
+    },300);
+     
+  }
     displayAmmo();
-    if(noAmmo()) {
-      ammo = 6;
-      displayAmmo();
-    }
 }
 
 // Display ammo remaining

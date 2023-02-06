@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    border: solid black 2px;
+    width: 1200px;
+    height: 625px;
+    background: no-repeat center/100% url("../img/background.jpg");
+    cursor: none;
+}
+
+.duck {
+    width: 64px;
+    height: 64px;
+    position: relative;
+    user-select: none;
+    border-radius: 50%;
+}
+
+button {
+    padding: 0.5em 1em;
+    margin-bottom: 0.5em;
+}
+
+#countdown {
+    font-size: 1.75em;
+    text-align: center;
+    position: absolute;
+    user-select: none;
+}
+
+#gun{
+    position: absolute;
+    /* transform:translate(-50%,-50%); */
+    height:50px;
+    width:50px;
+    border-top-right-radius: 100%;
+    border-bottom-left-radius: 100%;
+    pointer-events: none;
+}
+
+#shotgun {
+    width: 72px;
+    height: 72px;
+}
+
+.select {
+    background-color: grey;
+}
+
+.hidden {
+    display: none;
+}
+
+.hitbox {
+    border: solid red 3px;
+}
+
+.panel {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 1200px;
+}

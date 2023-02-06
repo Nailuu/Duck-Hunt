@@ -1,17 +1,25 @@
-let duckSide = "R";
-let duckSpeed = 10;
+// Global variables of the game
+const game = {
+  duckSide: "R",
+  duckSpeed: 10,
+  duckScore: 0,
+  hunterScore: 0,
+  ammo: 0,
+  timer: 0,
+  container: document.querySelector('.container'),
+  gun: document.querySelector('#gun'),
+  duck: null,
+  startBtn: document.querySelector('#start'),
+  easyBtn: document.querySelector('#easy'),
+  normalBtn: document.querySelector('#normal'),
+  hardBtn: document.querySelector('#hard'),
+  duckAnimationInterval: null
+}
 
-let duckScore = 0;
-let hunterScore = 0;
+// So variables are more accessible (ex: game.duckScore --> duckScore)
+let {duckSide, duckSpeed, duckScore, hunterScore, ammo, container, duck, gun, timer, duckAnimationInterval, startBtn, easyBtn, normalBtn, hardBtn} = game;
 
-let ammo = 6;
-
-const easyBtn = document.querySelector('#easy');
 easyBtn.disabled = true;
-
-const normalBtn = document.querySelector('#normal');
-const hardBtn = document.querySelector('#hard');
-const startBtn = document.querySelector('#start');
 
 easyBtn.addEventListener('click', () => {
     easyBtn.disabled = true;
@@ -46,16 +54,16 @@ const scoreboard = () => {
 
 // Create duck on the game container and set his default look
 const initDuck = () => {
-    const gameGrid = document.querySelector('.container');
-    const duck = document.createElement('img');
-    duck.src = "../img/duck3R.png";
-    duck.classList.add('duck');
+    const duckImg = document.createElement('img');
+    duckImg.src = "../img/duck3R.png";
+    duckImg.classList.add('duck');
     // duck.classList.add('hitbox');
     
-    gameGrid.appendChild(duck);
+    container.appendChild(duckImg);
+    duck = document.querySelector('.duck');
 }
 
-// Countdown before game end
+// Remove difficulty and start button, set and show countdown
 const countdown = () => {
     const countdownElement = document.querySelector('.btn-area');
 
@@ -69,25 +77,22 @@ const countdown = () => {
     countdownElement.classList.add('countdown');
 
     let startMinutes = 2;
-    let countdown = startMinutes * 60 - 1;
+    timer = startMinutes * 60 - 1;
     countdownElement.innerText = `02:00`;
 
     setInterval(() =>{
-        let minutes = parseInt(countdown / 60, 10);
-        let secondes = parseInt(countdown % 60, 10);
+        let minutes = parseInt(timer / 60, 10);
+        let secondes = parseInt(timer % 60, 10);
         minutes = minutes < 10 ? '0' + minutes : minutes
         secondes = secondes < 10 ? '0' + secondes : secondes
     
         countdownElement.innerText = `${minutes}:${secondes}`;
-        countdown = countdown  <= 0 ? 0 : countdown - 1
+        timer = timer  <= 0 ? 0 : timer - 1
     }, 1000)
 }
 
-let duckAnimationInterval;
-
 // Swaps between bird pictures to make it look like it's flying in the air depending on where it's flying towards
 const setDuckAnimation = () => {
-    const duck = document.querySelector('.duck');
     let counter = 3;
 
     duckAnimationInterval = setInterval(() => {
@@ -101,7 +106,6 @@ const setDuckAnimation = () => {
 
 // Display dead duck animation
 const setDeadDuckAnimation = () => {
-    const duck = document.querySelector('.duck');
     clearInterval(duckAnimationInterval);
     duck.src = `../img/dead.png`;
 
@@ -112,7 +116,6 @@ const setDeadDuckAnimation = () => {
 
 // Make dead duck fall into the ground
 const setDeadDuckPosition = () => {
-    const duck = document.querySelector(".duck");
     const duckY = duck.style.top.slice(0, -2);
 
     for(let i = duckY; i < 500; i++) {
@@ -124,8 +127,6 @@ const setDeadDuckPosition = () => {
 
 // When duck is hit, make the duck invunerable for a set delay, to avoid spamming..
 const setDuckGodMode = () => {
-  const duck = document.querySelector(".duck");
-
   duck.removeEventListener('mousedown', duckShotEvent);
   document.removeEventListener('keydown', duckMovementEvent);
 
@@ -135,7 +136,7 @@ const setDuckGodMode = () => {
   }, 1500)
 }
 
-
+// Execute all the related functions to duck being dead
 const setDeadDuck = () => {
     setDeadDuckPosition();
     setDeadDuckAnimation();
@@ -144,9 +145,6 @@ const setDeadDuck = () => {
 
 // Event listener callback on pressed keys to move duck with multiple keyboards layout (AZERTY, QWERTY)
 const duckMovementEvent = (e) => {
-    const duck = document.querySelector(".duck");
-    const container = document.querySelector(".container");
-
     let left = parseInt(duck.style.left) || 0;
     let top = parseInt(duck.style.top) || 0;
      
@@ -262,11 +260,9 @@ const addDuckScore = () => {
     score.innerText = duckScore;
 }
 
-
-// Timer of 10s of duck avoiding
-// Reset = 1 => Timer reset to 10
+// Add +1 to duck score every 10 seconds (should be 10 second without being shot)
 const duckAvoidingTimer = (reset) => {
-  time = 10;
+  let time = 10;
   setInterval(() =>{
     if(reset == 1){
       time = 10;
@@ -275,10 +271,9 @@ const duckAvoidingTimer = (reset) => {
       time = time;
     }
     time = time  <= 0 ? 0 : time - 1 
-    console.log(time);
 
     if(time == 0){
-      console.log("Duck Score added!")
+  
       time = 10;
       addDuckScore();
     }
@@ -319,15 +314,13 @@ const duckShotEvent = () => {
 
 //Add event listener on duck hit
 const hunterShoot = () => {
-    const hunterMiss = document.querySelector('.container');
-    const duck = document.querySelector('.duck');
-    duck.addEventListener('mousedown', function(hunterShoot){
+    duck.addEventListener('mousedown', hunterShoot => {
       hunterShoot.stopImmediatePropagation();
       duckShotEvent();
 
       });
-    if(hunterMiss.addEventListener('mousedown', ammunitions)){
-      hunterMiss.addEventListener('mousedown', ammunitions)
+    if(container.addEventListener('mousedown', ammunitions)){
+      container.addEventListener('mousedown', ammunitions)
     }
 }
 
@@ -380,16 +373,15 @@ const pauseAudio = () => {
 
 //Get user cursor position in the window and replace his cursor with a shotgun
 const gunCursor = () => {
-    const gun = document.querySelector('#gun');
     gun.classList.remove("hidden");
+
+    container.style.cursor = "none";
 
     window.addEventListener('mousemove', e => {
       gun.style.left = (e.clientX - 14) + 'px';
       gun.style.top = (e.clientY - 12) + 'px';
     })
 }
-
-const gun = document.querySelector('#gun');
 
 //Main function to execute all the function to start the game
 const init = () => {

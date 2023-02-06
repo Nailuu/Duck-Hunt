@@ -99,7 +99,7 @@ const setDeadDuckAnimation = () => {
     }, 1250);
 }
 
-// Make dead duck fall into the ground
+// Make dead duck falls into the ground
 const setDeadDuckPosition = () => {
     const duck = document.querySelector(".duck");
     const duckY = duck.style.top.slice(0, -2);
@@ -114,9 +114,13 @@ const setDeadDuckPosition = () => {
 // When duck is hit, make the duck invunerable for a set delay, to avoid spamming..
 const setDuckGodMode = () => {
   const duck = document.querySelector(".duck");
+  const hunterMiss = document.querySelector('.container');
+
 
   duck.removeEventListener('mousedown', duckShotEvent);
   document.removeEventListener('keydown', duckMovementEvent);
+
+  hunterMiss.removeEventListener('mousedown', duckShotEvent);
 
   setTimeout(() => {
     duckMovement();
@@ -138,67 +142,33 @@ const duckMovementEvent = (e) => {
 
     let left = parseInt(duck.style.left) || 0;
     let top = parseInt(duck.style.top) || 0;
+    
      
-    switch (e.key) {
-      case "z":
-        top -= duckSpeed;
-        break;
-      case "s":
-        top += duckSpeed;
-        break;
-      case "q":
+    // Moves with Arrow Keys
+    switch (e.keyCode) {
+
+      // Moves towards the left
+      case 37:
         left -= duckSpeed;
         duckSide = "L";
         break;
-      case "d":
-        left += duckSpeed;
-        duckSide = "R";
-        break;
-  
-      case "Z":
-          top -= duckSpeed;
-          break;
-      case "S":
-          top += duckSpeed;
-          break;
-      case "Q":
-          left -= duckSpeed;
-          duckSide = "L";
-          break;
-      case "D":
-          left += duckSpeed;
-          duckSide = "R";
-          break;
-  
-      case "w":
+
+      // Moves towards the up
+      case 38:
         top -= duckSpeed;
         break;
-      case "s":
-        top += duckSpeed;
-        break;
-      case "a":
-        left -= duckSpeed;
-        duckSide = "L";
-        break;
-      case "d":
+
+      // Moves towards the right
+      case 39:
         left += duckSpeed;
         duckSide = "R";
         break;
-  
-      case "W":
-          top -= duckSpeed;
-          break;
-      case "S":
-          top += duckSpeed;
-          break;
-      case "A":
-          left -= duckSpeed;
-          duckSide = "L";
-          break;
-      case "D":
-          left += duckSpeed;
-          duckSide = "R";
-          break;
+
+      // Moves towards the bottom
+      case 40:
+        top += duckSpeed;
+        break;
+
       default:
         break;
     }
@@ -255,10 +225,10 @@ const addDuckScore = () => {
 // Timer of 10s of duck avoiding
 // Reset = 1 => Timer reset to 10
 const duckAvoidingTimer = (reset) => {
-  time = 10;
+  time = 9;
   setInterval(() =>{
     if(reset == 1){
-      time = 10;
+      time = 9;
     }
     else{
       time = time;
@@ -310,13 +280,18 @@ const duckShotEvent = () => {
 const hunterShoot = () => {
     const hunterMiss = document.querySelector('.container');
     const duck = document.querySelector('.duck');
+    
     duck.addEventListener('mousedown', function(hunterShoot){
-      hunterShoot.stopImmediatePropagation();
       duckShotEvent();
+      playSound(0);
+      playSound(1);
+      hunterShoot.stopImmediatePropagation();
 
       });
     if(hunterMiss.addEventListener('mousedown', ammunitions)){
       hunterMiss.addEventListener('mousedown', ammunitions)
+      playSound(0);
+      playSound(1);
     }
 }
 
@@ -332,12 +307,11 @@ const playSound = track => {
 
   switch(track){
 
-
     case 0:
       // Shooting Sound
-      let shoot = document.querySelector("#start");
+      let shoot = document.querySelector('.container');
       function playMusic(){
-              let audio = new Audio("../audio/shoot.mp3");
+              let audio = new Audio('../audio/shoot.mp3');
               audio.play()
       }
       shoot.addEventListener("click", playMusic);
@@ -345,10 +319,10 @@ const playSound = track => {
 
     case 1:
       // Cogging Sound
-      let cog = document.querySelector("#start");
+      let cog = document.querySelector('.container');
 
       function playMusic(){
-              let audio = new Audio("../audio/cog.mp3");
+              let audio = new Audio('../audio/cog.mp3');
               audio.play()
       }
       cog.addEventListener("click", playMusic);

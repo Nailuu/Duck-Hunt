@@ -259,7 +259,7 @@ const booleanDuckAvoided = () => {
 
 //Main function to manage ammunition system
 const ammunitions = () => {
-
+  playSound(0);
   function clear() {
     clearInterval(this) 
     return clear; 
@@ -289,6 +289,7 @@ const duckShotEvent = () => {
 }
 
 const hunterFire = e => {
+    playSound(0);
     e.stopImmediatePropagation();
     duckShotEvent();
     e.stopImmediatePropagation();
@@ -296,8 +297,6 @@ const hunterFire = e => {
 
 //Add event listener on duck hit
 const hunterShoot = () => {
-  playSound(0);
-  playSound(1);
 
   duck.addEventListener('mousedown', hunterFire);
 

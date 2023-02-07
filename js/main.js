@@ -298,20 +298,19 @@ const duckShotEvent = () => {
 const hunterFire = e => {
     e.stopImmediatePropagation();
     duckShotEvent();
-    playSound(0);
-    playSound(1);
     e.stopImmediatePropagation();
 }
 
 //Add event listener on duck hit
 const hunterShoot = () => {
-    duck.addEventListener('mousedown', hunterFire);
+  playSound(0);
+  playSound(1);
 
-    if(container.addEventListener('mousedown', ammunitions)){
-      container.addEventListener('mousedown', ammunitions)
-      playSound(0);
-      playSound(1);
-    }
+  duck.addEventListener('mousedown', hunterFire);
+
+  if(container.addEventListener('mousedown', ammunitions)){
+    container.addEventListener('mousedown', ammunitions)
+  }
 }
 
 // Depending on the score based on the countdown, displays if the hunter wins or the duck wins
@@ -321,30 +320,39 @@ const win_loss_Screen = () => {
 
 // Pow sound + little background music when playing
 
-    // Tracks :  1 = Reload sound. 2  = Shoot sound 3 - Background Sound
+    // Tracks :  0 = Reload sound + Shooting. 2  = Shoot sound 3 - Background Sound
 const playSound = track => {
+
+  function playSoundShoot(){
+    let audio = new Audio('../audio/shoot.mp3');
+    console.log(audio)
+    audio.play()
+  }
+
+  function playSoundCog(){
+    let audio = new Audio('../audio/cog.mp3');
+    console.log(audio)
+    audio.play()
+  } 
+
 
   switch(track){
 
     case 0:
-      // Shooting Sound
-      let shoot = document.querySelector('.container');
-      function playMusic(){
-              let audio = new Audio('../audio/shoot.mp3');
-              audio.play()
-      }
-      shoot.addEventListener("click", playMusic);
+      // Shooting + Cogging Sound 
+      // container.addEventListener("click", playMusicShoot);
+      playSoundShoot();
+
+      const cogInterval = setInterval(() => {
+        clearInterval(cogInterval);
+        console.log("Playing sound right now!");
+        playSoundCog();
+      },1000);
+
       break;
 
     case 1:
-      // Cogging Sound
-      let cog = document.querySelector('.container');
-
-      function playMusic(){
-              let audio = new Audio('../audio/cog.mp3');
-              audio.play()
-      }
-      cog.addEventListener("click", playMusic);
+      // container.addEventListener("click", playMusic);
       break;
 
     case 2:

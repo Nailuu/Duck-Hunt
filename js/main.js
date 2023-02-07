@@ -128,10 +128,9 @@ const setDeadDuckPosition = () => {
 
 // When duck is hit, make the duck invunerable for a set delay, to avoid spamming..
 const setDuckGodMode = () => {
-  duck.removeEventListener('mousedown', duckShotEvent);
+  duck.removeEventListener('mousedown', hunterFire);
   document.removeEventListener('keydown', duckMovementEvent);
 
-  container.removeEventListener('mousedown', duckShotEvent);
 
   setTimeout(() => {
     duckMovement();
@@ -260,7 +259,7 @@ const booleanDuckAvoided = () => {
 
 //Main function to manage ammunition system
 const ammunitions = () => {
-  // const container = document.querySelector('.container');
+
   function clear() {
     clearInterval(this) 
     return clear; 
@@ -296,16 +295,18 @@ const duckShotEvent = () => {
     setDeadDuck();
 }
 
+const hunterFire = e => {
+    e.stopImmediatePropagation();
+    duckShotEvent();
+    playSound(0);
+    playSound(1);
+    e.stopImmediatePropagation();
+}
+
 //Add event listener on duck hit
 const hunterShoot = () => {
-    duck.addEventListener('mousedown', hunterShoot => {
-      hunterShoot.stopImmediatePropagation();
-      duckShotEvent();
-      playSound(0);
-      playSound(1);
-      hunterShoot.stopImmediatePropagation();
+    duck.addEventListener('mousedown', hunterFire);
 
-      });
     if(container.addEventListener('mousedown', ammunitions)){
       container.addEventListener('mousedown', ammunitions)
       playSound(0);

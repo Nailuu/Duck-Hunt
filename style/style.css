@@ -4,7 +4,7 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Press Start 2P', cursive;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,6 +12,11 @@ body {
     min-height: 100vh;
     gap: 1em;
     margin: 1em;
+}
+
+.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
 }
 
 .container {
@@ -37,7 +42,7 @@ button {
 }
 
 #countdown {
-    font-size: 1.75em;
+    font-size: 1.25em;
     text-align: center;
     position: absolute;
     user-select: none;
@@ -45,7 +50,7 @@ button {
 
 #gun{
     position: absolute;
-    /* transform:translate(-50%,-50%); */
+    transform:translateY(75%);
     height:50px;
     width:50px;
     border-top-right-radius: 100%;
@@ -91,7 +96,7 @@ button {
     gap: 1em;
     background-color: grey;
     height: 110px;
-    width: 200px;
+    width: 225px;
     border-radius: 20px;
     color: white;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -100,11 +105,11 @@ button {
 .countdown {
     height: 110px;
     width: 250px;
-    font-size: 5em;
+    font-size: 2.5em;
 }
 
 #scoreDuck, #scoreHunter {
-    font-size: 5em;
+    font-size: 3em;
 }
 
 #duck-ico, #hunter-ico {

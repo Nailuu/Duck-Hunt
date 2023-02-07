@@ -1,7 +1,6 @@
 # Duck Hunt 🦆
 
-🎓 School Project
- #
+ #🎓 School Project
 ⚙️ Features:
 
 - 💣 Ammunitions

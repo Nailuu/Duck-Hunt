@@ -2,7 +2,6 @@
 
 🎓 School Project
  
-#
 ⚙️ Features:
 
 - 💣 Ammunitions

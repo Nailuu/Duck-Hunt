@@ -177,6 +177,7 @@ const duckMovementEvent = (e) => {
       y += duckSpeed;
     }
 
+    // Prevent arrow keys to scroll the page even tho its supposed to be disabled in CSS
     e.preventDefault();
   
     //To avoid duck from exiting playground borders
@@ -204,8 +205,9 @@ const duckMovementEvent = (e) => {
       y = container.offsetHeight - duck.offsetHeight;
     }
 
-  duck.style.left = x + "px";
-  duck.style.top = y + "px";
+    // Apply new coordinates to duck object
+    duck.style.left = x + "px";
+    duck.style.top = y + "px";
 }
 
 // Move the duck in the space depending on pressed keys, and also avoid duck from exiting playground borders
@@ -233,11 +235,11 @@ const addDuckScore = () => {
 }
 
 // Add +1 to duck score every 10 seconds (should be 10 second without being shot)
-const duckAvoidingTimer = (reset) => {
-  let time = 9;
+const duckAvoidingTimer = reset => {
+  let time = 10;
   setInterval(() =>{
     if(reset == 1){
-      time = 9;
+      time = 10;
     }
     else{
       time = time;
@@ -246,7 +248,7 @@ const duckAvoidingTimer = (reset) => {
 
     if(time == 0){
   
-      time = 9;
+      time = 10;
       addDuckScore();
     }
   }, 1000);
@@ -305,6 +307,8 @@ const duckShotEvent = () => {
 }
 
 const hunterFire = e => {
+    playSoundScream();
+    playSound(0);
     e.stopImmediatePropagation();
     duckShotEvent();
     e.stopImmediatePropagation();
@@ -341,6 +345,24 @@ const win_loss_Screen = () => {
 
 }
 
+// Sound when duck has been hit
+const playSoundScream = () => {
+  let audio = new Audio('../audio/scream.mp3');
+  audio.play()
+}
+
+// Sound when you shoot with shotgun
+const playSoundShoot = () => {
+  let audio = new Audio('../audio/shoot.mp3');
+  audio.play()
+}
+
+// Sound when you reload with the shotgun
+const playSoundCog = () => {
+  let audio = new Audio('../audio/cog.mp3');
+  audio.play()
+}
+
 // Pow sound + little background music when playing
 
     // Tracks :  0 = Reload sound + Shooting. 2  = Shoot sound 3 - Background Sound
@@ -348,11 +370,13 @@ const playSound = track => {
 
   function playSoundShoot(){
     let audio = new Audio('../audio/shoot.mp3');
+    console.log(audio)
     audio.play()
   }
 
   function playSoundCog(){
     let audio = new Audio('../audio/cog.mp3');
+    console.log(audio)
     audio.play()
   } 
 
@@ -360,19 +384,17 @@ const playSound = track => {
   switch(track){
 
     case 0:
-      // Shooting + Cogging Sound 
-      // container.addEventListener("click", playMusicShoot);
       playSoundShoot();
 
       const cogInterval = setInterval(() => {
         clearInterval(cogInterval);
+        console.log("Playing sound right now!");
         playSoundCog();
       },1000);
 
       break;
 
     case 1:
-      // container.addEventListener("click", playMusic);
       break;
 
     case 2:

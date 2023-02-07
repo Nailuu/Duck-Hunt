@@ -265,7 +265,6 @@ const ammunitions = () => {
     return clear; 
   }
   ammo--;
-  displayAmmo();
   if(noAmmo()) {
 
     setInterval(() => {
@@ -275,14 +274,8 @@ const ammunitions = () => {
     },300);
      
   }
-    displayAmmo();
 }
 
-// Display ammo remaining
-const displayAmmo = () => {
-    const ammoScore = document.querySelector('#ammo');
-    ammoScore.innerText = ammo;
-}
 
 // Boolean to check if there is still ammo ?
 const noAmmo = () => ammo === 0;

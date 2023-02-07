@@ -3,6 +3,7 @@
 #
 ⚙️ Features:
 
+- 🎮 Local Multiplayer (2 player)
 - 💣 Ammunitions
 - 🎚️ Difficulty (Easy, Normal, Hard)
 - 🔊 Sound effects (Shotgun, Reload, Hit)

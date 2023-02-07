@@ -131,7 +131,7 @@ const setDuckGodMode = () => {
   duck.removeEventListener('mousedown', duckShotEvent);
   document.removeEventListener('keydown', duckMovementEvent);
 
-  hunterMiss.removeEventListener('mousedown', duckShotEvent);
+  container.removeEventListener('mousedown', duckShotEvent);
 
   setTimeout(() => {
     duckMovement();

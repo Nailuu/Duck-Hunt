@@ -4,7 +4,7 @@ const game = {
   duckSpeed: 10,
   duckScore: 0,
   hunterScore: 0,
-  ammo: 0,
+  ammo: 6,
   timer: 0,
   container: document.querySelector('.container'),
   gun: document.querySelector('#gun'),
@@ -257,24 +257,41 @@ const booleanDuckAvoided = () => {
 
 }
 
-//Main function to manage ammunition system
-const ammunitions = () => {
-  playSound(0);
-  function clear() {
-    clearInterval(this) 
-    return clear; 
-  }
-  ammo--;
-  if(noAmmo()) {
+let ammoTimeout;
 
-    setInterval(() => {
-      ammo++
+const ammunitions = () => {
+
+  if (ammo <= 0 || ammoTimeout) return;
+
+  ammoTimeout = setTimeout(() => {
+    ammoTimeout = null;
+  }, 800);
+
+  playSound(0);
+  ammo--;
+  console.log(ammo);
+
+  if (ammo <= 0) {
+    console.log(ammo);
+
+    const ammoInterval = setInterval(() => {
+      ammoTimeout = setTimeout(() => {
+        ammoTimeout = null;
+      }, 1200);
+
+      ammo++;
       console.log(ammo);
-      if(ammo == 6) clear();
-    },300);
-     
+
+      if (ammo > 6) {
+        clearInterval(ammoInterval);
+      ammo = 6;
+      
+      }
+    }, 200);
   }
 }
+
+
 
 
 // Boolean to check if there is still ammo ?
@@ -284,12 +301,10 @@ const noAmmo = () => ammo === 0;
 //What will execute on duck hit
 const duckShotEvent = () => {
     addHunterScore();
-    ammunitions();
     setDeadDuck();
 }
 
 const hunterFire = e => {
-    playSound(0);
     e.stopImmediatePropagation();
     duckShotEvent();
     e.stopImmediatePropagation();
@@ -297,12 +312,28 @@ const hunterFire = e => {
 
 //Add event listener on duck hit
 const hunterShoot = () => {
+  
 
-  duck.addEventListener('mousedown', hunterFire);
+  // duck.addEventListener('mousedown', hunterFire);
 
-  if(container.addEventListener('mousedown', ammunitions)){
-    container.addEventListener('mousedown', ammunitions)
-  }
+  // if(container.addEventListener('mousedown', ammunitions)){
+  //   container.addEventListener('mousedown', ammunitions)
+  // }
+  // Previous Code
+
+
+  const shootingInterval = setInterval(() => {
+    clearInterval(shootingInterval);
+    duck.addEventListener('mousedown', hunterFire);
+  
+    if(container.addEventListener('mousedown', ammunitions)){
+      container.addEventListener('mousedown', ammunitions)
+    }
+  
+    console.log(ammo);
+  
+  },3000);
+  //  Use and modify to put a timer between shots
 }
 
 // Depending on the score based on the countdown, displays if the hunter wins or the duck wins
@@ -317,13 +348,11 @@ const playSound = track => {
 
   function playSoundShoot(){
     let audio = new Audio('../audio/shoot.mp3');
-    console.log(audio)
     audio.play()
   }
 
   function playSoundCog(){
     let audio = new Audio('../audio/cog.mp3');
-    console.log(audio)
     audio.play()
   } 
 
@@ -337,7 +366,6 @@ const playSound = track => {
 
       const cogInterval = setInterval(() => {
         clearInterval(cogInterval);
-        console.log("Playing sound right now!");
         playSoundCog();
       },1000);
 
@@ -385,7 +413,6 @@ const init = () => {
     setDuckAnimation();
     gunCursor();
     hunterShoot();
-    // playSound(0);
     duckAvoidingTimer();
     gun.classList.remove('hidden');
 }

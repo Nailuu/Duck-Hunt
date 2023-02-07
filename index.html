@@ -10,29 +10,36 @@
     <title>Duck Hunt</title>
 </head>
 <body class="stop-scrolling">
-    <div class="panel">
-        <div class="panel-score-duck"><label for="scoreDuck"><img src="/img/duck.png" alt="" id="duck-ico"></label><span id="scoreDuck">0</span></div>
-        <div class="btn-area">
-            <div class="difficulty">
-                <button id="easy">EASY</button>
-                <button id="normal">NORMAL</button>
-                <button id="hard">HARD</button>
+    <div class="main">
+        <div class="panel">
+            <div class="panel-score-duck"><label for="scoreDuck"><img src="/img/duck.png" alt="" id="duck-ico"></label><span id="scoreDuck">0</span></div>
+            <div class="btn-area">
+                <div class="difficulty">
+                    <button id="easy">EASY</button>
+                    <button id="normal">NORMAL</button>
+                    <button id="hard">HARD</button>
+                </div>
+                <div class="command">
+                    <button id="start">START</button>
+                    <button id="reset" onClick="window.location.reload()">RESET</button>
+                </div>
             </div>
-            <div class="command">
-                <button id="start">START</button>
-                <button id="reset" onClick="window.location.reload()">RESET</button>
-            </div>
+            <div class="panel-score-hunter"><label for="scoreHunter"><img src="/img/hunter.png" alt="" id="hunter-ico"></label><span id="scoreHunter">0</span></div>
         </div>
-        <div class="panel-score-hunter"><label for="scoreHunter"><img src="/img/hunter.png" alt="" id="hunter-ico"></label><span id="scoreHunter">0</span></div>
-    </div>
-    <div class="container">
-        <div id="countdown"></div>
-        <div id="gun" class="hidden">
-            <img src="/img/shotgun.png" alt="" id="shotgun">
+        <div class="container">
+            <div id="countdown"></div>
+            <div id="gun" class="hidden">
+                <img src="/img/shotgun.png" alt="" id="shotgun">
+            </div>
         </div>
     </div>
     <aside class="ammo-panel">
-        Ammo remaining : <span id="ammo">6</span>
+        <span class="ammo"><img src="/img/shell.png" alt=""></span>
+        <span class="ammo"><img src="/img/shell.png" alt=""></span>
+        <span class="ammo"><img src="/img/shell.png" alt=""></span>
+        <span class="ammo"><img src="/img/shell.png" alt=""></span>
+        <span class="ammo"><img src="/img/shell.png" alt=""></span>
+        <span class="ammo"><img src="/img/shell.png" alt=""></span>
     </aside>
     <script src="js/main.js"></script>
 </body>

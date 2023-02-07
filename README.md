@@ -1,4 +1,4 @@
-# Duck Hunt 🦆
+# Duck Hunt 🦆🧑‍🌾
 🎓 School Project
 #
 ⚙️ Features:

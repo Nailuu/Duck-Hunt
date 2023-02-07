@@ -1,6 +1,6 @@
 # Duck-Hunt 🦆
  
-- ⚙️ Features:
+⚙️ Features:
 
 - 💣 Ammunitions
 - 🎚️ Difficulty (Easy, Normal, Hard)
@@ -10,7 +10,7 @@
 - 💯 Score
 
 
-- 📜 Instructions:
+📜 Instructions:
 
 - ⏱️ You have to minutes to score the maximum points.
 
@@ -20,7 +20,7 @@
 - 🏆 The winner is the the player with the most points !
 
 
-- 🕹️ Controls:
+🕹️ Controls:
 
 - 🦆 Arrow Keys - ⬅️⬆️➡️⬇️
 - 🔫 Mouse - 🖱️ - Left Click to Fire 

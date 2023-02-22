@@ -279,13 +279,14 @@ const booleanDuckAvoided = () => {
 
 }
 
+
 let ammoTimeout;
 let ammoInterval;
 let godModeTimeout;
 let isReloading = false;
+let ammoCounter = 1;
 
 const ammunitions = () => {
-
   if (ammo <= 0 || ammoTimeout || isReloading) return;
 
   ammoTimeout = setTimeout(() => {
@@ -295,6 +296,10 @@ const ammunitions = () => {
   playSound(0);
   ammo--;
   console.log(ammo);
+  const ammoElement = document.getElementById(`ammo${ammo}`);
+  if (ammoElement) {
+    ammoElement.innerHTML = "";
+  }
 
   if (ammo <= 0) {
     console.log(ammo);
@@ -303,12 +308,17 @@ const ammunitions = () => {
       setDuckGodMode();
 
       godModeTimeout = null;
-    }, 2400)
+    }, 1200)
 
     let prevAmmo = ammo;
     ammoInterval = setInterval(() => {
       ammo++;
       console.log(ammo);
+      const nextAmmoElement = document.getElementById(`ammo${ammo}`);
+      if (nextAmmoElement) {
+        nextAmmoElement.innerHTML = "<img src='/img/shell.png' alt=''>";
+      }
+
       if (ammo > 6) {
         clearInterval(ammoInterval);
         ammo = 6;
@@ -316,7 +326,9 @@ const ammunitions = () => {
         isReloading = false;
         clearTimeout(godModeTimeout);
         godModeTimeout = null;
-      } else if (prevAmmo === ammo) {
+      } 
+      
+      else if (prevAmmo === ammo) {
         clearInterval(ammoInterval);
         ammo = 6;
         ammoInterval = null;
@@ -330,11 +342,6 @@ const ammunitions = () => {
 };
 
 
-
-
-
-
-
 // Boolean to check if there is still ammo ?
 const noAmmo = () => ammo === 0;
 
@@ -343,6 +350,7 @@ const noAmmo = () => ammo === 0;
 const duckShotEvent = () => {
     addHunterScore();
     setDeadDuck();
+    ammunitions();
 }
 
 const hunterFire = e => {
@@ -393,6 +401,10 @@ const playSoundCog = () => {
   audio.play()
 }
 
+const playSoundTheme = () => {
+  let audio = new Audio('../audio/theme.mp3');
+  audio.play();
+}
 // Pow sound + little background music when playing
 
     // Tracks :  0 = Reload sound + Shooting. 2  = Shoot sound 3 - Background Sound
@@ -438,7 +450,7 @@ const pause = () => {
     let escCounter = 0;
 
     if(e.key == 27){
-
+      console.log("esc pressed");
       escCounter = 1;
 
       do{
@@ -479,6 +491,7 @@ const init = () => {
     gunCursor();
     hunterShoot();
     duckAvoidingTimer();
+    playSoundTheme();
     gun.classList.remove('hidden');
 
     win_loss_Screen();

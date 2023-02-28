@@ -1,46 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="/img/duck3R.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="/img/duck3R.png" />
     <title>Duck Hunt</title>
-</head>
-<body class="stop-scrolling">
+  </head>
+  <body class="stop-scrolling">
     <div class="main">
-        <div class="panel">
-            <div class="panel-score-duck"><label for="scoreDuck"><img src="/img/duck.png" alt="" id="duck-ico"></label><span id="scoreDuck">0</span></div>
-            <div class="btn-area">
-                <div class="difficulty">
-                    <button id="easy">EASY</button>
-                    <button id="normal">NORMAL</button>
-                    <button id="hard">HARD</button>
-                </div>
-                <div class="command">
-                    <button id="start">START</button>
-                    <button id="reset" onClick="window.location.reload()">RESET</button>
-                </div>
-            </div>
-            <div class="panel-score-hunter"><label for="scoreHunter"><img src="/img/hunter.png" alt="" id="hunter-ico"></label><span id="scoreHunter">0</span></div>
+      <div class="panel">
+        <div class="panel-score-duck">
+          <label for="scoreDuck">
+            <img src="/img/duck.png" alt="" id="duck-ico" />
+          </label>
+          <span id="scoreDuck">0</span>
         </div>
-        <div class="container">
-            <div id="countdown"></div>
-            <div id="gun" class="hidden">
-                <img src="/img/shotgun.png" alt="" id="shotgun">
-            </div>
+        <div class="btn-area">
+          <div class="difficulty">
+            <button id="easy">EASY</button>
+            <button id="normal">NORMAL</button>
+            <button id="hard">HARD</button>
+          </div>
+          <div class="command">
+            <button id="start">START</button>
+            <button id="reset" onclick="window.location.reload()">RESET</button>
+          </div>
         </div>
+        <div class="panel-score-hunter">
+          <label for="scoreHunter">
+            <img src="/img/hunter.png" alt="" id="hunter-ico" />
+          </label>
+          <span id="scoreHunter">0</span>
+        </div>
+      </div>
+      <div class="container">
+        <div id="countdown"></div>
+        <div id="gun" class="hidden">
+          <img src="/img/shotgun.png" alt="" id="shotgun" />
+        </div>
+        <div id="duck-click-area"></div>
+        <button id="bottomRestartButton" class="hidden" onclick="location.reload()">
+          NEW GAME
+        </button>
+      </div>
     </div>
     <aside class="ammo-panel">
-        <span class="ammo" id="ammo1"><img src="/img/shell.png" alt=""></span>
-        <span class="ammo" id="ammo2"><img src="/img/shell.png" alt=""></span>
-        <span class="ammo" id="ammo3"><img src="/img/shell.png" alt=""></span>
-        <span class="ammo" id="ammo3"><img src="/img/shell.png" alt=""></span>
-        <span class="ammo" id="ammo4"><img src="/img/shell.png" alt=""></span>
-        <span class="ammo" id="ammo5"><img src="/img/shell.png" alt=""></span>
+      <span class="ammo" id="ammo1">
+        <img src="/img/shell.png" alt="" />
+      </span>
+      <span class="ammo" id="ammo2">
+        <img src="/img/shell.png" alt="" />
+      </span>
+      <span class="ammo" id="ammo3">
+        <img src="/img/shell.png" alt="" />
+      </span>
+      <span class="ammo" id="ammo4">
+        <img src="/img/shell.png" alt="" />
+      </span>
+      <span class="ammo" id="ammo5">
+        <img src="/img/shell.png" alt="" />
+      </span>
+      <span class="ammo" id="ammo6">
+        <img src="/img/shell.png" alt="" />
+      </span>
     </aside>
     <script src="js/main.js"></script>
-</body>
+  </body>
 </html>

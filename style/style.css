@@ -42,9 +42,22 @@ body {
 }
 
 button {
+    height: 65px;
+    width: 120px;
     padding: 0.5em 1em;
     margin-bottom: 0.5em;
+    border-radius: 20px;
+    color: white;
+    background-color: grey;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+button:disabled{
+    background-color: black;
+    opacity: 20%;
+}
+button:hover{
+    background-color: orange;
 }
 
 #countdown {
@@ -101,7 +114,7 @@ button {
     justify-content: center;
     gap: 1em;
     background-color: grey;
-    height: 110px;
+    height: 150px;
     width: 225px;
     border-radius: 20px;
     color: white;
@@ -112,6 +125,7 @@ button {
     height: 110px;
     width: 250px;
     font-size: 2.5em;
+    left: 50%;
 }
 
 #scoreDuck, #scoreHunter {
@@ -127,10 +141,11 @@ button {
     display: flex;
     flex-direction: column;
     transform: translateY(60px);
+    margin-bottom: -50px;
 }
 
 .ammo > img{
-    height: 100px;
+    height: 108px;
     width: 50px;
     
 }

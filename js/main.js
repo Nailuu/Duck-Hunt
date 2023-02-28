@@ -81,7 +81,7 @@ const countdown = () => {
     timer = startMinutes * 60 - 1;
     countdownElement.innerText = `02:00`;
 
-    setInterval(() =>{
+    timerClear = setInterval(() =>{
         let minutes = parseInt(timer / 60, 10);
         let secondes = parseInt(timer % 60, 10);
         minutes = minutes < 10 ? '0' + minutes : minutes
@@ -89,6 +89,30 @@ const countdown = () => {
     
         countdownElement.innerText = `${minutes}:${secondes}`;
         timer = timer  <= 0 ? 0 : timer - 1
+
+        if(timer == 0){
+          clearInterval(timerClear);
+          document.removeEventListener('keydown', duckMovementEvent);
+          duck.removeEventListener('mousedown', hunterFire);
+          clearInterval(duckAutoScore);
+          
+        if(timer == 0){
+          if(hunterScore > duckScore){
+            console.log(`Hunter has won!\nHunter : ${hunterScore}\n Duck : ${duckScore}`)
+            document.write(`<h1>Hunter has won!<h1><br><h2>Hunter : ${hunterScore} vs Duck : ${duckScore}</h2><br><button onClick="window.location.reload();">New Game</button>`);
+          }
+          else if(hunterScore == duckScore){
+            console.log(`Hunter and Duck have the same score. It's a tie!\nHunter : ${hunterScore}\n Duck : ${duckScore}`)
+            document.write(`<h1>Hunter and Duck have the same score. It's a tie!<h1><br><h2>Hunter : ${hunterScore} vs Duck : ${duckScore}</h2><br><button onClick="window.location.reload();">New Game</button>`);
+          }
+        
+          else{
+            console.log(`Duck has won!\nHunter : ${hunterScore}\nDuck : ${DuckScore}`)
+            document.write(`<h1>Duck has won!<h1><br><h2>Hunter : ${hunterScore} vs Duck : ${duckScore}</h2><br><button onClick="window.location.reload();">New Game</button>`);
+          }
+        }
+
+        }
     }, 1000)
 }
 
@@ -225,6 +249,7 @@ const addHunterScore = () => {
     hunterScore++;
     const score = document.querySelector('#scoreHunter');
     score.innerText = hunterScore;
+    return hunterScore;
 }
 
 // Add +1 to duck score
@@ -232,38 +257,21 @@ const addDuckScore = () => {
     duckScore++;
     const score = document.querySelector('#scoreDuck');
     score.innerText = duckScore;
+    return duckScore;
 }
 
-// Add +1 to duck score every 10 seconds (should be 10 second without being shot)
-const duckAvoidingTimer = reset => {
-  let time = 10;
-  setInterval(() =>{
-    if(reset == 1){
-      time = 10;
-    }
-    else{
-      time = time;
-    }
-    time = time  <= 0 ? 0 : time - 1 
-
-    if(time == 0){
-  
-      time = 10;
-      addDuckScore();
-    }
-  }, 1000);
-}
-
-// Did the duck avoid being shot for 10 seconds?
-const booleanDuckAvoided = () => {
-
-}
+const duckAutoScore = () => {
+    addDuckScore();
+} 
 
 let ammoTimeout;
+let ammoInterval;
+let godModeTimeout;
+let isReloading = false;
+let ammoCounter = 1;
 
 const ammunitions = () => {
-
-  if (ammo <= 0 || ammoTimeout) return;
+  if (ammo <= 0 || ammoTimeout || isReloading) return;
 
   ammoTimeout = setTimeout(() => {
     ammoTimeout = null;
@@ -272,28 +280,50 @@ const ammunitions = () => {
   playSound(0);
   ammo--;
   console.log(ammo);
+  const ammoElement = document.getElementById(`ammo${ammo}`);
+  if (ammoElement) {
+    ammoElement.innerHTML = "";
+  }
 
   if (ammo <= 0) {
     console.log(ammo);
+    isReloading = true;
+    godModeTimeout = setTimeout(() => {
+      setDuckGodMode();
 
-    const ammoInterval = setInterval(() => {
-      ammoTimeout = setTimeout(() => {
-        ammoTimeout = null;
-      }, 1200);
+      godModeTimeout = null;
+    }, 1200)
 
+    let prevAmmo = ammo;
+    ammoInterval = setInterval(() => {
       ammo++;
       console.log(ammo);
+      const nextAmmoElement = document.getElementById(`ammo${ammo}`);
+      if (nextAmmoElement) {
+        nextAmmoElement.innerHTML = "<img src='/img/shell.png' alt=''>";
+      }
 
       if (ammo > 6) {
         clearInterval(ammoInterval);
-      ammo = 6;
+        ammo = 6;
+        ammoInterval = null;
+        isReloading = false;
+        clearTimeout(godModeTimeout);
+        godModeTimeout = null;
+      } 
       
+      else if (prevAmmo === ammo) {
+        clearInterval(ammoInterval);
+        ammo = 6;
+        ammoInterval = null;
+        isReloading = false;
+        clearTimeout(godModeTimeout);
+        godModeTimeout = null;
       }
-    }, 200);
+      prevAmmo = ammo;
+    }, 400);
   }
-}
-
-
+};
 
 
 // Boolean to check if there is still ammo ?
@@ -304,6 +334,7 @@ const noAmmo = () => ammo === 0;
 const duckShotEvent = () => {
     addHunterScore();
     setDeadDuck();
+    ammunitions();
 }
 
 const hunterFire = e => {
@@ -316,15 +347,6 @@ const hunterFire = e => {
 
 //Add event listener on duck hit
 const hunterShoot = () => {
-  
-
-  // duck.addEventListener('mousedown', hunterFire);
-
-  // if(container.addEventListener('mousedown', ammunitions)){
-  //   container.addEventListener('mousedown', ammunitions)
-  // }
-  // Previous Code
-
 
   const shootingInterval = setInterval(() => {
     clearInterval(shootingInterval);
@@ -363,9 +385,47 @@ const playSoundCog = () => {
   audio.play()
 }
 
+const playSoundTheme = () => {
+  let audio = new Audio('../audio/theme.mp3');
+  audio.play();
+}
 // Pow sound + little background music when playing
 
     // Tracks :  0 = Reload sound + Shooting. 2  = Shoot sound 3 - Background Sound
+
+  
+    let soundTimeout;
+    const playSound = track => {
+    
+      switch(track){
+    
+        case 0:
+    
+          if(soundTimeout) {
+            clearTimeout(soundTimeout);
+            soundTimeout = null;
+          }
+    
+          playSoundShoot();
+    
+          playSoundCog();
+    
+          soundTimeout = setTimeout(() => {
+            soundTimeout = null;
+          }, 800);
+    
+          break;
+    
+        case 1:
+          break;
+    
+        case 2:
+          // Reloading Sound
+    
+        case 3: 
+          // Game Sound
+      }
+    }
 const playSound = track => {
   switch(track){
 
@@ -392,7 +452,24 @@ const playSound = track => {
 }
 
 // Pause sound + pausing music when going into menu
-const pauseAudio = () => {
+const pause = () => {
+  
+  addEventListener('keypress', (e) => {
+    let escCounter = 0;
+
+    if(e.key == 27){
+      console.log("esc pressed");
+      escCounter = 1;
+
+      do{
+        // Keep the pause menu up with everything in the background paused including the music playing.
+      }while(escCounter == 1);
+      escCounter = 0;
+    }
+
+  });
+
+  
     
 }  
 
@@ -416,13 +493,16 @@ const init = () => {
     hardBtn.disabled = true;
 
     countdown();
+    setInterval(duckAutoScore, 10000);
     initDuck();
     duckMovement();
     setDuckAnimation();
     gunCursor();
     hunterShoot();
-    duckAvoidingTimer();
+    playSoundTheme();
     gun.classList.remove('hidden');
+
+    win_loss_Screen();
 }
 
 // Event listener on start button to init the game, can execute only once

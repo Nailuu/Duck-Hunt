@@ -98,8 +98,6 @@ const initDuck = () => {
   const duckImg = document.createElement('img');
   duckImg.src = "../img/duck3R.png";
   duckImg.classList.add('duck');
-  // duck.classList.add('hitbox');
-
   container.appendChild(duckImg);
   duck = document.querySelector('.duck');
 }
@@ -126,11 +124,11 @@ const countdown = () => {
   timerClear = setInterval(() => {
       let minutes = parseInt(timer / 60, 10);
       let secondes = parseInt(timer % 60, 10);
-      minutes = minutes < 10 ? '0' + minutes : minutes
-      secondes = secondes < 10 ? '0' + secondes : secondes
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      secondes = secondes < 10 ? '0' + secondes : secondes;
 
       countdownElement.innerText = `${minutes}:${secondes}`;
-      timer = timer <= 0 ? 0 : timer - 1
+      timer = timer <= 0 ? 0 : timer - 1;
 
       if (timer == 0) {
           clearInterval(timerClear);
@@ -193,7 +191,7 @@ const countdown = () => {
 // Sound when duck has been hit
 const playSoundScream = () => {
   let audio = new Audio('../audio/scream.mp3');
-  audio.play()
+  audio.play();
 }
 
 // Sound when you shoot with shotgun (includes firing and reloading (cogging))
@@ -201,10 +199,10 @@ const playSoundShoot = () => {
   let shoot = new Audio('../audio/shoot.mp3');
   let cog = new Audio('../audio/cog.mp3');
 
-  shoot.play()
+  shoot.play();
   const cogInterval = setInterval(() => {
       clearInterval(cogInterval);
-      cog.play()
+      cog.play();
   }, 400);
 
 }
@@ -372,7 +370,7 @@ const duckMovement = () => {
 
       // Remove stored pressed keys when key are up
       keys[e.keyCode] = false;
-  }, false)
+  }, false);
 }
 
 // Add +1 to duck score
@@ -475,7 +473,7 @@ const hunterShoot = () => {
       duck.addEventListener('mousedown', hunterShootBird);
 
       if (container.addEventListener('mousedown', ammunitions)) {
-          container.addEventListener('mousedown', ammunitions)
+          container.addEventListener('mousedown', ammunitions);
       }
 
 
@@ -526,8 +524,4 @@ const init = () => {
 
 
 // Event listener on start button to init the game, can execute only once
-startBtn.addEventListener('click', () => {
-  init();
-}, {
-  once: true
-})
+startBtn.addEventListener('click', () => { init(); }, { once: true });

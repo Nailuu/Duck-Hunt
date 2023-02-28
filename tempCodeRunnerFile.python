@@ -1,4 +1,0 @@
-a = int(input("Enter number of stars : "))
-b = int(input("Enter number of rows : "))
-
-print(((a*"*") + "\n") * b)

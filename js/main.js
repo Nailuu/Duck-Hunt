@@ -367,20 +367,6 @@ const playSoundCog = () => {
 
     // Tracks :  0 = Reload sound + Shooting. 2  = Shoot sound 3 - Background Sound
 const playSound = track => {
-
-  function playSoundShoot(){
-    let audio = new Audio('../audio/shoot.mp3');
-    console.log(audio)
-    audio.play()
-  }
-
-  function playSoundCog(){
-    let audio = new Audio('../audio/cog.mp3');
-    console.log(audio)
-    audio.play()
-  } 
-
-
   switch(track){
 
     case 0:
